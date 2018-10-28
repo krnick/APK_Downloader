@@ -62,9 +62,34 @@ def getDetailsByPackName(packagename):
         print(str(key) +"==="+str(value)+"\n")
 
 def browseCategories():
+    """
+    get all categories in google play store
+    """
     categories = api.browse()
 
     for cate in categories:
         print(cate) 
 
-browseCategories()
+def getSubListByCategory(category):
+    """
+    get specific sub category  by using categories name
+    """
+    print("List all app in this category: %s" % category)
+
+    sub_list_app = api.list(category)
+
+    for sub_list in sub_list_app:
+        print(sub_list)
+
+def getAppBySubList(category, sub_list):
+    """
+    get app by specific sub_list name
+    """
+    #example api.list("apps_topselling_free","MUSIC_AND_AUDIO")
+    sub_list_app = api.list(category, sub_list)
+   
+    for app in sub_list_app:
+        print(app['docId'])
+
+
+getAppBySubList("MUSIC_AND_AUDIO","apps_topselling_free")
