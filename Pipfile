@@ -6,6 +6,9 @@ name = "pypi"
 [dev-packages]
 
 [packages]
+cryptography = "*"
+requests = "*"
+protobuf = "*"
 
 [requires]
 python_version = "3.5"

@@ -1,5 +1,5 @@
-from google_play_api.googleplay import GooglePlayAPI
-from core.config import *
+from Google_play_api.googleplay import GooglePlayAPI
+from config.config import LOCALE, TIMEZONE, GOOGLE_PASSWORD , GOOGLE_LOGIN
 import sys
 
 #########################################################################
@@ -8,8 +8,8 @@ import sys
 # if show up SecurityCheckError when you modify the code
 #########################################################################
 api = GooglePlayAPI(LOCALE, TIMEZONE)
-#api.login(GOOGLE_LOGIN, GOOGLE_PASSWORD )
-api.login( gsfId = ANDROID_ID, authSubToken=AUTH_TOKEN)
+api.login(GOOGLE_LOGIN, GOOGLE_PASSWORD )
+#api.login( gsfId = ANDROID_ID, authSubToken=AUTH_TOKEN)
 
 
 def downloadApkByPackageName(packagename):
