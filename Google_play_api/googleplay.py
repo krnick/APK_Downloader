@@ -259,7 +259,6 @@ class GooglePlayAPI(object):
             master_token = params["token"]
             second_round_token = self.getSecondRoundToken(master_token, requestParams)
             self.setAuthSubToken(second_round_token)
-            print(second_round_token)
         elif "error" in params:
             raise LoginError("server says: " + params["error"])
         else:

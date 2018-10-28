@@ -7,9 +7,19 @@ import sys
 # need to login on https://accounts.google.com/b/0/DisplayUnlockCaptcha
 # if show up SecurityCheckError when you modify the code
 #########################################################################
+
+#first login need to use account/password
 api = GooglePlayAPI(LOCALE, TIMEZONE)
 api.login(GOOGLE_LOGIN, GOOGLE_PASSWORD )
-#api.login( gsfId = ANDROID_ID, authSubToken=AUTH_TOKEN)
+
+# you can get gsfid and subtoken after login
+gsfId = api.gsfId
+authSubToken = api.authSubToken
+
+# use id and authSubToken to login
+
+api.login(None, None, gsfId, authSubToken)
+
 
 
 def downloadApkByPackageName(packagename):
@@ -23,7 +33,32 @@ def downloadApkByPackageName(packagename):
     print('\nDownload successful\n')
 
 
-#if (len(sys.argv) == 2):
-#    downloadApkByPackageName(sys.argv[1])
-#else:
-#    print("usage : python3 DownloadApk.py com.apkfordownload.tw")
+def searchApkByKeyWord(search_word, maximum_search):
+    """
+    search(self, query, nb_result, offset=None):
+       
+    Search the play store for an app.
+
+    nb_result is the maximum number of result to be returned.
+
+    offset is used to take result starting from an index.
+    """
+ 
+    apps = api.search(search_word, maximum_search)
+
+    print('searching....\n')
+
+    for app in apps:
+        print(app['docId'])
+
+def getDetailsByPackName(packagename):
+
+    details = api.details(packagename)
+
+    #print(details['docId'])
+    #print(details['permission'])
+
+    for key,value in details.items():
+        print(str(key) +"==="+str(value)+"\n")
+
+getDetailsByPackName("net.otouch.cake")
