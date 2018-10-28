@@ -61,4 +61,10 @@ def getDetailsByPackName(packagename):
     for key,value in details.items():
         print(str(key) +"==="+str(value)+"\n")
 
-getDetailsByPackName("net.otouch.cake")
+def browseCategories():
+    categories = api.browse()
+
+    for cate in categories:
+        print(cate) 
+
+browseCategories()
