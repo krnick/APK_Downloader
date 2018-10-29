@@ -4,11 +4,16 @@ use google api download apk via python3
 
 Usage:
 
+* Download project
+
+    ```
+    git clone https://github.com/krnick/APK_Downloader.git
+    ```
+
 * Envirnment setting:
     ```
     $ pipenv shell
     $ pipenv install
-
     ```
 
 * How to use:
