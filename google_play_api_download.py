@@ -103,14 +103,9 @@ def getAppBySubList(category, sub_list):
 
 def Main():
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-dl", "--download", help="download apk by package name")
-    parser.add_argument("-d", "--detail", help="get detailds from apk name")
-    parser.add_argument(
-        "-b",
-        "--browse",
-        default="default",
-        help="get all categories from google")
+    parser.add_argument("-download", help="download apk by package name")
+    parser.add_argument("-detail", help="get detailds from apk name")
+    parser.add_argument("-browse",help="get all categories from google")
     args = parser.parse_args()
 
     if args.download:
