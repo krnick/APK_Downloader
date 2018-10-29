@@ -9,6 +9,8 @@ name = "pypi"
 cryptography = "*"
 requests = "*"
 protobuf = "*"
+"flake8" = "*"
+yapf = "*"
 
 [requires]
 python_version = "3.5"
