@@ -1,24 +1,28 @@
 from Google_play_api.googleplay import GooglePlayAPI
 from config.config import LOCALE, TIMEZONE, GOOGLE_PASSWORD , GOOGLE_LOGIN
 import sys
+import argparse
 
+api = None
 #########################################################################
 # need email and password
 # need to login on https://accounts.google.com/b/0/DisplayUnlockCaptcha
 # if show up SecurityCheckError when you modify the code
 #########################################################################
 
-#first login need to use account/password
-api = GooglePlayAPI(LOCALE, TIMEZONE)
-api.login(GOOGLE_LOGIN, GOOGLE_PASSWORD )
+def initialize_login():
+    global api
+    #first login need to use account/password
+    api = GooglePlayAPI(LOCALE, TIMEZONE)
+    api.login(GOOGLE_LOGIN, GOOGLE_PASSWORD )
 
-# you can get gsfid and subtoken after login
-gsfId = api.gsfId
-authSubToken = api.authSubToken
+    # you can get gsfid and subtoken after login
+    gsfId = api.gsfId
+    authSubToken = api.authSubToken
 
-# use id and authSubToken to login
+    # use id and authSubToken to login
 
-api.login(None, None, gsfId, authSubToken)
+    api.login(None, None, gsfId, authSubToken)
 
 
 
@@ -92,4 +96,21 @@ def getAppBySubList(category, sub_list):
         print(app['docId'])
 
 
-getAppBySubList("MUSIC_AND_AUDIO","apps_topselling_free")
+
+
+def Main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-download", help="download apk by package name")
+    parser.add_argument("-detail", help="get detailds from apk name")
+    args = parser.parse_args()
+
+    if args.download:
+        initialize_login()
+        downloadApkByPackageName(args.download)
+
+    if args.detail:
+        initialize_login()
+        getDetailsByPackName(args.detail)
+
+if __name__ == '__main__':
+    Main()
