@@ -4,15 +4,13 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 import urllib.request, urllib.parse, urllib.error
 
-
 progress_bar = None
 
-url = "http://m.apk.tw/top"
-content = urllib.request.urlopen(url)
+top_page_url = "http://m.apk.tw/top"
+content = urllib.request.urlopen(top_page_url)
 html_code = content.read().decode("utf-8")
 
 soup = BeautifulSoup(html_code, "html.parser")
-
 
 
 def getInformationFromAPk(url):
@@ -116,7 +114,7 @@ def Main():
                     print(getInformationFromAPk(each_apk_url))
                     # print(each_apk_url, rank)
                     # rank += 1
-
+    # Usage
     # 取得單一APP資訊
     # result_information = getInformationFromAPk(
     #     "https://m.apk.tw/app/com.madhead.tos.zh/")
