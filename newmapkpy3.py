@@ -4,8 +4,15 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 import urllib.request, urllib.parse, urllib.error
 
-download_apk_from_url = "http://m.apk.tw/top"
+
 progress_bar = None
+
+url = "http://m.apk.tw/top"
+content = urllib.request.urlopen(url)
+html_code = content.read().decode("utf-8")
+
+soup = BeautifulSoup(html_code, "html.parser")
+
 
 
 def getInformationFromAPk(url):
@@ -58,6 +65,7 @@ def getInformationFromAPk(url):
 # download apk file from m.apk.tw/top
 
 
+# 從提供的網址下載檔案下來
 def downloadApkFromUrl(url_to_download, filename, total_size):
     print("Downloading  %s  file , size is %s" % (filename, total_size))
     urllib.request.urlretrieve(url_to_download, filename,
@@ -65,6 +73,7 @@ def downloadApkFromUrl(url_to_download, filename, total_size):
     print("Finish donloading")
 
 
+#   callback function for urlretrieve to generate progressbar
 def callback_download_complete(block_num, block_size, total_size):
     global progress_bar
     if progress_bar is None:
@@ -80,15 +89,41 @@ def callback_download_complete(block_num, block_size, total_size):
 
 def Main():
     # 取得全部要下載的APP url
+    for cat in range(0, 6):
+        # category
+        w240 = soup.findAll("div", {"class": "w240 mt-12 mr-15"})[cat]
+        category = w240.find("div", {"class": "title"}).h3.string
+        # print category
 
+        for ts in range(0, 2):
+            # sub-category
+            tab = w240.findAll("div", {"class": "tab"})
+            spans = w240.findAll('span')
+            # print subcategory
+            subcategory = spans[ts].string
+            # print subcategory
+            cat_sub = category + "-" + subcategory
+
+            # download list
+            toplist = w240.findAll("div", {"class": "toplist ami"})
+
+            rank = 1
+
+            for url in toplist[ts].find_all("a"):
+                if (url.get('class') == ['down']):
+                    each_apk_url = url.get('href')
+
+                    print(getInformationFromAPk(each_apk_url))
+                    # print(each_apk_url, rank)
+                    # rank += 1
 
     # 取得單一APP資訊
-    result_information = getInformationFromAPk(
-        "https://m.apk.tw/app/com.madhead.tos.zh/")
+    # result_information = getInformationFromAPk(
+    #     "https://m.apk.tw/app/com.madhead.tos.zh/")
     # 開始下載
-    downloadApkFromUrl(result_information['apk_url'],
-                       result_information['apk_name'] + '.apk',
-                       result_information['filesize'])
+    # downloadApkFromUrl(result_information['apk_url'],
+    #                    result_information['apk_name'] + '.apk',
+    #                    result_information['filesize'])
 
 
 if __name__ == '__main__':
