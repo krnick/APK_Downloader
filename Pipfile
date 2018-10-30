@@ -12,6 +12,7 @@ protobuf = "*"
 "flake8" = "*"
 yapf = "*"
 "beautifulsoup4" = "*"
+progressbar = "*"
 
 [requires]
 python_version = "3.5"
