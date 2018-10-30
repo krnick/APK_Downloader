@@ -1,6 +1,5 @@
 import re
 import progressbar
-import time
 from datetime import datetime
 from bs4 import BeautifulSoup
 import urllib.request, urllib.parse, urllib.error
@@ -43,15 +42,24 @@ def getInformationFromAPk(url):
     package_name = prolist[5][prolist[5].index("：") + 1:prolist[5].index("</")]
     date = prolist[6][prolist[6].index("：") + 1:prolist[6].index("</")]
 
-    print(apk_url, apk_name, version, filesize, download_times, classification,
-          system, package_name, date)
+    return {
+        'apk_url': apk_url,
+        'apk_name': apk_name,
+        'version': version,
+        'filesize': filesize,
+        'download_times': download_times,
+        'classification': classification,
+        'system': system,
+        'package_name': package_name,
+        'date': date
+    }
 
 
 # download apk file from m.apk.tw/top
 
 
-def downloadApkFromUrl(url_to_download, filename):
-    print("Downloading Apk file")
+def downloadApkFromUrl(url_to_download, filename, total_size):
+    print("Downloading  %s  file , size is %s" % (filename, total_size))
     urllib.request.urlretrieve(url_to_download, filename,
                                callback_download_complete)
     print("Finish donloading")
@@ -70,4 +78,18 @@ def callback_download_complete(block_num, block_size, total_size):
         progress_bar = None
 
 
-getInformationFromAPk("https://m.apk.tw/app/com.madhead.tos.zh/")
+def Main():
+    # 取得全部要下載的APP url
+
+
+    # 取得單一APP資訊
+    result_information = getInformationFromAPk(
+        "https://m.apk.tw/app/com.madhead.tos.zh/")
+    # 開始下載
+    downloadApkFromUrl(result_information['apk_url'],
+                       result_information['apk_name'] + '.apk',
+                       result_information['filesize'])
+
+
+if __name__ == '__main__':
+    Main()
