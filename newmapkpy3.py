@@ -4,58 +4,66 @@ import urllib.request, urllib.parse, urllib.error
 
 progress_bar = None
 
-top_page_url = "http://m.apk.tw/top"
-content = urllib.request.urlopen(top_page_url)
-html_code = content.read().decode("utf-8")
-
-soup = BeautifulSoup(html_code, "html.parser")
+# top_page_url = "http://m.apk.tw/top"
+# content = urllib.request.urlopen(top_page_url)
+# html_code = content.read().decode("utf-8")
+#
+# soup = BeautifulSoup(html_code, "html.parser")
 
 
 def getInformationFromAPk(url):
 
-    information_content = urllib.request.urlopen(url)
-    information_html_code = information_content.read().decode("utf-8")
+    try:
+        information_content = urllib.request.urlopen(url)
+        information_html_code = information_content.read().decode("utf-8")
+        soup = BeautifulSoup(information_html_code, "html.parser")
 
-    soup = BeautifulSoup(information_html_code, "html.parser")
+        apk_url = soup.find(
+            "div", attrs={
+                'class': 'download'
+            }).find(
+                "a", href=True)['href']
 
-    apk_url = soup.find(
-        "div", attrs={
-            'class': 'download'
-        }).find(
-            "a", href=True)['href']
+        apk_name = soup.find("h3", attrs={'class': 'mt-10'}).string
 
-    apk_name = soup.find("h3", attrs={'class': 'mt-10'}).string
+        # get property from web
+        apk_property = soup.find(
+            "div", attrs={
+                'class': 'property'
+            }).find_all('li')
+        prolist = []
 
-    # get property from web
-    apk_property = soup.find("div", attrs={'class': 'property'}).find_all('li')
-    prolist = []
+        for li in apk_property:
+            prolist.append(str(li))
 
-    for li in apk_property:
-        prolist.append(str(li))
+        # slice string from ':' and end with '</'
 
-    # slice string from ':' and end with '</'
+        version = prolist[0][prolist[0].index("：") + 1:prolist[0].index("</")]
+        filesize = prolist[1][prolist[1].index("：") + 1:prolist[1].index("</")]
+        download_times = prolist[2][prolist[2].index("：") +
+                                    1:prolist[2].index("</")]
+        classification = prolist[3][prolist[3].index("\">") +
+                                    2:prolist[3].index("</")]
+        system = prolist[4][prolist[4].index("：") + 1:prolist[4].index("</")]
+        package_name = prolist[5][prolist[5].index("：") +
+                                  1:prolist[5].index("</")]
+        date = prolist[6][prolist[6].index("：") + 1:prolist[6].index("</")]
 
-    version = prolist[0][prolist[0].index("：") + 1:prolist[0].index("</")]
-    filesize = prolist[1][prolist[1].index("：") + 1:prolist[1].index("</")]
-    download_times = prolist[2][prolist[2].index("：") +
-                                1:prolist[2].index("</")]
-    classification = prolist[3][prolist[3].index("\">") +
-                                2:prolist[3].index("</")]
-    system = prolist[4][prolist[4].index("：") + 1:prolist[4].index("</")]
-    package_name = prolist[5][prolist[5].index("：") + 1:prolist[5].index("</")]
-    date = prolist[6][prolist[6].index("：") + 1:prolist[6].index("</")]
-
-    return {
-        'apk_url': apk_url,
-        'apk_name': apk_name,
-        'version': version,
-        'filesize': filesize,
-        'download_times': download_times,
-        'classification': classification,
-        'system': system,
-        'package_name': package_name,
-        'date': date
-    }
+        return {
+            'apk_url': apk_url,
+            'apk_name': apk_name,
+            'version': version,
+            'filesize': filesize,
+            'download_times': download_times,
+            'classification': classification,
+            'system': system,
+            'package_name': package_name,
+            'date': date
+        }
+    except urllib.error.URLError as e:
+        print("URL ERROR given that you provide wrong app url")
+        print(e.reason)
+        return None
 
 
 # download apk file from m.apk.tw/top
@@ -73,7 +81,7 @@ def downloadApkFromUrl(url_to_download, filename, total_size):
         print(e.reason, e.code)
     except urllib.error.URLError as e:
         print("URL ERROR")
-        print(e.reason)
+        print(e.reason, e.code)
 
 
 #   callback function for urlretrieve to generate progressbar
@@ -122,12 +130,14 @@ def Main():
     # rank += 1
     # Usage
     # 取得單一APP資訊
+
     result_information = getInformationFromAPk(
         "https://m.apk.tw/app/com.netease.sq.baidu/")
     # 開始下載
-    downloadApkFromUrl(result_information['apk_url'],
-                       result_information['apk_name'] + '.apk',
-                       result_information['filesize'])
+    if (result_information is not None):
+        downloadApkFromUrl(result_information['apk_url'],
+                           result_information['apk_name'] + '.apk',
+                           result_information['filesize'])
 
 
 if __name__ == '__main__':
