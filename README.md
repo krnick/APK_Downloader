@@ -54,3 +54,15 @@ Usage:
 
     * 透過大分類、子分類 取得對應的package name
     def getAppBySubList(category, sub_list):
+
+
+
+
+
+* Download apk from   ( http://m.apk.tw/top ) 
+
+    * Usage
+    ```
+    $ python newmapkpy3.py 
+    ```
+

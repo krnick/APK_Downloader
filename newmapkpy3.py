@@ -136,8 +136,9 @@ def Main():
                 if (url.get('class') == ['down']):
                     each_apk_url = url.get('href')
 
-                    # print(getInformationFromAPk(each_apk_url))
-                    print(each_apk_url, rank)
+                    # print(getInformationFromAPk(each_apk_url)) 輸出排行榜中app的url 
+                    # usage : download_all_app(each_apk_url) 開始查詢資訊並下載
+                    # print(each_apk_url, rank) 輸出排名
                     rank += 1
 
 
