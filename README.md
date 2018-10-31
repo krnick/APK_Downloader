@@ -26,9 +26,9 @@ Usage:
 
 * Problem solved :
 
-    # need to login on
-    # https://accounts.google.com/b/0/DisplayUnlockCaptcha
-    # if show up SecurityCheckError when you modify the code
+    need to login on
+    https://accounts.google.com/b/0/DisplayUnlockCaptcha
+    if show up SecurityCheckError when you modify the code
 
 * Function_description:
 
@@ -59,10 +59,12 @@ Usage:
 
 
 
-* Download apk from   ( http://m.apk.tw/top ) 
+# Download apk from   ( http://m.apk.tw/top ) 
 
     * Usage
     ```
+    $ pipenv shell
+    $ pipenv install
     $ python newmapkpy3.py 
     ```
 
