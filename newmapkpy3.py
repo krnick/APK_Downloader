@@ -72,7 +72,7 @@ def getInformationFromAPk(url):
 # 從提供的網址下載檔案下來
 def downloadApkFromUrl(url_to_download, filename, total_size):
     try:
-        print("Downloading  %s  file , size is %s" % (filename, total_size))
+        print("Downloading  %s  file , total size : %s" % (filename , total_size))
         urllib.request.urlretrieve(url_to_download, filename,
                                    callback_download_complete)
         print("Finish donloading")
@@ -137,9 +137,10 @@ def Main():
                     each_apk_url = url.get('href')
 
                     # print(getInformationFromAPk(each_apk_url)) 輸出排行榜中app的url 
-                    # usage : download_all_app(each_apk_url) 開始查詢資訊並下載
+                    # usage :
+                    download_all_app(each_apk_url)# 開始查詢資訊並下載
                     # print(each_apk_url, rank) 輸出排名
-                    rank += 1
+                    #rank += 1
 
 
 if __name__ == '__main__':
