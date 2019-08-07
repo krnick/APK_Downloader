@@ -36,27 +36,32 @@ Usage:
 * Function_description:
 
     * Download APK via package name
-    def downloadApkByPackageName(packagename):
+    
+    def downloadApkByPackageName(packagename)
 
 
     * Search for the closest apk by searching the string
-    def searchApkByKeyWord(search_word, maximum_search):
+    
+    def searchApkByKeyWord(search_word, maximum_search)
 
 
     * Get APK details from package name
-    def getDetailsByPackName(packagename):
+    
+    def getDetailsByPackName(packagename)
 
 
     * Get all categories
-    def browseCategories():
+    
+    def browseCategories()
 
 
     * Get subcategories through parent categories
-    def getSubListByCategory(category):
-
+    
+    def getSubListByCategory(category)
 
     * Get the corresponding package name through parent classification and sub-category
-    def getAppBySubList(category, sub_list):
+    
+    def getAppBySubList(category, sub_list)
 
 # Download apk from   ( http://m.apk.tw/top )
 
