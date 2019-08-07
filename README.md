@@ -15,14 +15,17 @@ Usage:
     $ pipenv shell
     $ pipenv install
     ```
+    1. Replace with your account on config/config.py
+
+    2. Login on https://accounts.google.com/b/0/DisplayUnlockCaptcha
+
+
 
 * How to use:
     ```
     $ python3 google_play_api_download.py -download package.name
     $ python3 google_play_api_download.py -detail package.name
     ```
-
-
 
 * Problem solved :
 
@@ -32,39 +35,35 @@ Usage:
 
 * Function_description:
 
-    * 透過package name 下載 apk
+    * Download APK via package name
     def downloadApkByPackageName(packagename):
 
 
-    * 透過搜尋字串，搜尋最接近apk
+    * Search for the closest apk by searching the string
     def searchApkByKeyWord(search_word, maximum_search):
 
 
-    * 透過package name 取得apk 細節資訊 
+    * Get APK details from package name
     def getDetailsByPackName(packagename):
 
 
-    * 取得所有分類
+    * Get all categories
     def browseCategories():
 
 
-    * 透過大分類取得子分類
+    * Get subcategories through parent categories
     def getSubListByCategory(category):
 
 
-    * 透過大分類、子分類 取得對應的package name
+    * Get the corresponding package name through parent classification and sub-category
     def getAppBySubList(category, sub_list):
 
-
-
-
-
-# Download apk from   ( http://m.apk.tw/top ) 
+# Download apk from   ( http://m.apk.tw/top )
 
     * Usage
     ```
     $ pipenv shell
     $ pipenv install
-    $ python newmapkpy3.py 
+    $ python newmapkpy3.py
     ```
 
